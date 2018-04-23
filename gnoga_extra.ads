@@ -34,17 +34,18 @@ package Gnoga_Extra is
 
    package Radio_Lists is new Ada.Containers.Vectors (Index_Type => Positive, Element_Type => Radio_Info);
 
+   use type Ada.Containers.Count_Type;
+
    procedure Create (Radio        :    out Radio_Lists.Vector;
                      Form         : in out Gnoga.Gui.Element.Form.Form_Type'Class;
                      Label        : in     Text_List;
                      Name         : in     String;
-                     Orientation  : in     Orientation_ID := Vertical;
-                     ID           : in     String         := "");
+                     Orientation  : in     Orientation_ID := Vertical) with Pre => Name /= "", Post => Radio.Length = Label'Length;
    -- Creates a set of radio buttons in Form, one for each element of Label
    -- For I in Label'Range, the Ith button will have Label (I) as its label
    -- The Label'First button will be checked; the others will not
    -- All radio buttons in a set must have the same Name
-   -- If Orientation = Horizontal, the button will be on the same line; otherwise, Form.New_Line will be called
+   -- If Orientation = Horizontal, the buttons will be on the same line; otherwise, Form.New_Line will be called
    -- between each pair of buttons
 
    type Text_Info is tagged limited record
