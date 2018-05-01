@@ -40,13 +40,16 @@ package Gnoga_Extra is
                      Form         : in out Gnoga.Gui.Element.Form.Form_Type'Class;
                      Label        : in     Text_List;
                      Name         : in     String;
-                     Orientation  : in     Orientation_ID := Vertical) with Pre => Name /= "", Post => Radio.Length = Label'Length;
+                     Orientation  : in     Orientation_ID := Vertical;
+                     ID           : in     String         := "") with Pre => Name /= "", Post => Radio.Length = Label'Length;
    -- Creates a set of radio buttons in Form, one for each element of Label
    -- For I in Label'Range, the Ith button will have Label (I) as its label
    -- The Label'First button will be checked; the others will not
    -- All radio buttons in a set must have the same Name
    -- If Orientation = Horizontal, the buttons will be on the same line; otherwise, Form.New_Line will be called
    -- between each pair of buttons
+   -- If ID = "", ID is used as the ID parameter when creating the buttons;
+   -- otherwise, the button for Label (I) will have the ID I'Image & 'R' & ID
 
    type Text_Info is tagged limited record
       Box   : Gnoga.Gui.Element.Form.Text_Type;

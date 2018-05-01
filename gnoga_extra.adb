@@ -24,16 +24,21 @@ package body Gnoga_Extra is
                      Form         : in out Gnoga.Gui.Element.Form.Form_Type'Class;
                      Label        : in     Text_List;
                      Name         : in     String;
-                     Orientation  : in     Orientation_ID := Vertical)
+                     Orientation  : in     Orientation_ID := Vertical;
+                     ID           : in     String         := "")
    is
+      function Radio_ID (I : Positive) return String is (if ID = "" then "" else I'Image & 'R' & ID);
+
       Button : Radio_Info;
    begin -- Create
       Radio.Clear;
 
       All_Buttons : for I in Label'Range loop
          Button.Button := new Gnoga.Gui.Element.Form.Radio_Button_Type;
-         Button.Button.Create (Form => Form, Checked => I = Label'First, Name => Name);
+         Button.Button.Dynamic;
+         Button.Button.Create (Form => Form, Checked => I = Label'First, Name => Name, ID => Radio_ID (I) );
          Button.Label := new Gnoga.Gui.Element.Form.Label_Type;
+         Button.Label.Dynamic;
          Button.Label.Create (Form => Form, Label_For => Button.Button.all, Content => To_String (Label (I) ), Auto_Place => False);
          Radio.Append (New_Item => Button);
 
