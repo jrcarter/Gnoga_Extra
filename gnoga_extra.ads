@@ -28,20 +28,19 @@ package Gnoga_Extra is
    type Orientation_ID is (Horizontal, Vertical);
 
    type Radio_Info is record
-      Button : Gnoga.Gui.Element.Form.Radio_Button_Access;
-      Label  : Gnoga.Gui.Element.Form.Label_Access;
+      Button : Gnoga.Gui.Element.Form.Radio_Button_Type;
+      Label  : Gnoga.Gui.Element.Form.Label_Type;
    end record;
 
-   package Radio_Lists is new Ada.Containers.Vectors (Index_Type => Positive, Element_Type => Radio_Info);
+   type Radio_List is array (Positive range <>) of Radio_Info;
 
-   use type Ada.Containers.Count_Type;
-
-   procedure Create (Radio        :    out Radio_Lists.Vector;
+   procedure Create (Radio        :    out Radio_List;
                      Form         : in out Gnoga.Gui.Element.Form.Form_Type'Class;
                      Label        : in     Text_List;
                      Name         : in     String;
                      Orientation  : in     Orientation_ID := Vertical;
-                     ID           : in     String         := "") with Pre => Name /= "", Post => Radio.Length = Label'Length;
+                     ID           : in     String         := "")
+   with Pre => Name /= "" and Radio'First = Label'First and Radio'Last = Label'Last;
    -- Creates a set of radio buttons in Form, one for each element of Label
    -- For I in Label'Range, the Ith button will have Label (I) as its label
    -- The Label'First button will be checked; the others will not
