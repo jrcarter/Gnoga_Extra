@@ -20,21 +20,20 @@ package body Gnoga_Extra is
 
    use Ada.Strings.Unbounded;
 
-   procedure Create (Radio        :    out Radio_List;
+   procedure Create (Radio        : in out Radio_Info;
                      Form         : in out Gnoga.Gui.Element.Form.Form_Type'Class;
-                     Label        : in     Text_List;
                      Name         : in     String;
                      Orientation  : in     Orientation_ID := Vertical;
                      ID           : in     String         := "")
    is
       function Radio_ID (I : Positive) return String is (if ID = "" then "" else I'Image & 'R' & ID);
    begin -- Create
-      All_Buttons : for I in Label'Range loop
-         Radio (I).Button.Create (Form => Form, Checked => I = Label'First, Name => Name, ID => Radio_ID (I) );
-         Radio (I).Label.Create
-            (Form => Form, Label_For => Radio (I).Button, Content => To_String (Label (I) ), Auto_Place => False);
+      All_Buttons : for I in Radio.List'Range loop
+         Radio.List (I).Button.Create (Form => Form, Checked => I = Radio.List'First, Name => Name, ID => Radio_ID (I) );
+         Radio.List (I).Label.Create
+            (Form => Form, Label_For => Radio.List (I).Button, Content => To_String (Radio.List (I).Text), Auto_Place => False);
 
-         if I < Label'Last and Orientation = Vertical then
+         if I < Radio.List'Last and Orientation = Vertical then
             Form.New_Line;
          end if;
       end loop All_Buttons;
