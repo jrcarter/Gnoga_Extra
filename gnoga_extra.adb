@@ -1,8 +1,11 @@
 -- Helper types and Create operations for frequently combined Gnoga widgets
 --
--- Copyright (C) 2018 by PragmAda Software Engineering
+-- Copyright (C) by PragmAda Software Engineering
 --
--- Released under the terms of the 3-Clause BSD License. See https://opensource.org/licenses/BSD-3-Clause
+-- SPDX-License-Identifier: BSD-3-Clause
+-- See https://spdx.org/licenses/
+-- If you find this software useful, please let me know, either through
+-- github.com/jrcarter or directly to pragmada@pragmada.x10hosting.com
 
 package body Gnoga_Extra is
    procedure Create (Box     : in out Check_Info;
@@ -17,6 +20,19 @@ package body Gnoga_Extra is
       Box.Box.Create (Form => Form, Checked => Checked, Name => Name, ID => ID);
       Box.Label.Create (Form => Form, Label_For => Box.Box, Content => Label, Auto_Place => False);
    end Create;
+
+   procedure Create (Graphic : in out Graphic_Area;
+                     Parent  : in out Gnoga.Gui.Base.Base_Type'Class;
+                     Width   : in     Integer;
+                     Height  : in     Integer;
+                     ID      : in     String := "")
+   is
+      -- Empty
+   begin -- Create
+      Graphic.Canvas.Create (Parent => Parent, Width => Width, Height => Height, ID => ID);
+      Graphic.Context.Get_Drawing_Context_2D (Canvas => Graphic.Canvas);
+   end Create;
+
 
    use Ada.Strings.Unbounded;
 

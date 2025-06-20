@@ -1,11 +1,17 @@
 -- Helper types and Create operations for frequently combined Gnoga widgets
+-- These are for Gnoga 1.x; those wishing to use Gnoga 2.x will need to replace String with Gnoga.String
 --
--- Copyright (C) 2018 by PragmAda Software Engineering
+-- Copyright (C) by PragmAda Software Engineering
 --
--- Released under the terms of the 3-Clause BSD License. See https://opensource.org/licenses/BSD-3-Clause
+-- SPDX-License-Identifier: BSD-3-Clause
+-- See https://spdx.org/licenses/
+-- If you find this software useful, please let me know, either through
+-- github.com/jrcarter or directly to pragmada@pragmada.x10hosting.com
 
 with Ada.Containers.Vectors;
 with Ada.Strings.Unbounded;
+with Gnoga.Gui.Base;
+with Gnoga.Gui.Element.Canvas.Context_2D;
 with Gnoga.Gui.Element.Form;
 
 package Gnoga_Extra is
@@ -22,6 +28,19 @@ package Gnoga_Extra is
                      ID      : in     String  := "");
    -- Creates a check box with a label of Label in Form
    -- Checked, Name, and ID are passed to Create for Box.Box
+
+   type Graphic_Area is tagged limited record
+      Canvas  : Gnoga.Gui.Element.Canvas.Canvas_Type;
+      Context : Gnoga.Gui.Element.Canvas.Context_2D.Context_2D_Type;
+   end record;
+
+   procedure Create (Graphic : in out Graphic_Area;
+                     Parent  : in out Gnoga.Gui.Base.Base_Type'Class;
+                     Width   : in     Integer;
+                     Height  : in     Integer;
+                     ID      : in     String := "");
+   -- Creates Graphic.Canvas and gets a Context_2d for it in Graphic.Context
+   -- Parent, Width, Height, and ID are passed to Create for Graphic.Canvas
 
    type Radio_Data is record
       Button : Gnoga.Gui.Element.Form.Radio_Button_Type;
